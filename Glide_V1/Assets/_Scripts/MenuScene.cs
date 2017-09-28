@@ -28,6 +28,7 @@ public class MenuScene : MonoBehaviour
     private MenuCamera m_MenuCam; 
 
     private Vector3 m_desiredMenuPosition;
+    private GameObject m_currentTrail; 
 
     public AnimationCurve m_enteringLevelZoomCurve;
     private bool m_isEnteringLevel = false;
@@ -106,7 +107,7 @@ public class MenuScene : MonoBehaviour
 
             //set color of owned or not
             Image img = t.GetComponent<Image>();
-            img.color = SaveManager.m_instance.IsColorOwned(i) ? Color.white : new Color(0.7f, 0.7f, 0.7f);
+            img.color = SaveManager.m_instance.IsColorOwned(i) ? Manager.Instance.m_playerColors[currentIndex] : Color.Lerp(Manager.Instance.m_playerColors[currentIndex], new Color(0, 0, 0, 1), .1f);
             i++;
         }
 
@@ -119,7 +120,7 @@ public class MenuScene : MonoBehaviour
 
             //set trail of owned or not
             Image img = t.GetComponent<Image>();
-            img.color = SaveManager.m_instance.IsTrailOwned(i) ? Color.white : new Color(0.7f, 0.7f, 0.7f);
+            img.color = SaveManager.m_instance.IsTrailOwned(i) ? Manager.Instance.m_playerColors[currentIndex] : new Color(0.7f, 0.7f, 0.7f);
 
             i++;
         }
@@ -304,7 +305,7 @@ public class MenuScene : MonoBehaviour
                 //success
                 SetColor(m_selectColorIndex);
 
-                m_colorPanel.GetChild(m_selectColorIndex).GetComponent<Image>().color = Color.white;
+                m_colorPanel.GetChild(m_selectColorIndex).GetComponent<Image>().color = Manager.Instance.m_playerColors[m_selectColorIndex];
 
                 UpdateGoldText();
             }
@@ -354,6 +355,7 @@ public class MenuScene : MonoBehaviour
         m_colorBuySetText.text = "Current";
         SaveManager.m_instance.m_state.m_activeColor = index;
 
+        Manager.Instance.m_playerMaterial.color = Manager.Instance.m_playerColors[index];
         m_activeColorIndex = index;
 
         SaveManager.m_instance.Save();
@@ -363,6 +365,18 @@ public class MenuScene : MonoBehaviour
     {
         m_trailBuySetText.text = "Current";
         SaveManager.m_instance.m_state.m_activeTrail = index;
+
+        if(m_currentTrail != null)
+        {
+            Destroy(m_currentTrail);
+        }
+
+        m_currentTrail = Instantiate(Manager.Instance.m_playerTrails[index]) as GameObject;
+        m_currentTrail.transform.SetParent(FindObjectOfType<MenuPlayer>().transform);
+
+        m_currentTrail.transform.localPosition = Vector3.zero;
+        m_currentTrail.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        m_currentTrail.transform.localScale = Vector3.one * 0.01f; 
 
         m_activeTrailIndex = index;
 

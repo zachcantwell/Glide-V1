@@ -7,6 +7,9 @@ public class MenuCamera : MonoBehaviour {
     public Transform m_shopWayPoint;
     public Transform m_levelWayPoint;
 
+    public float m_rotationSpeed;
+    public float m_positionSpeed; 
+
     private Vector3 m_startPosition;
     private Quaternion m_startRotation;
 
@@ -16,13 +19,13 @@ public class MenuCamera : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         m_startPosition = m_desiredPosition = transform.localPosition;
-        m_startRotation = m_desiredRotation = transform.rotation; 	
+        m_startRotation = m_desiredRotation = transform.localRotation; 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        transform.localPosition = Vector3.Lerp(transform.localPosition, m_desiredPosition, 0.1f);
-        transform.localRotation = Quaternion.Lerp(transform.rotation, m_desiredRotation, 0.1f);	
+        transform.localPosition = Vector3.Lerp(transform.localPosition, m_desiredPosition, m_positionSpeed * Time.deltaTime);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, m_desiredRotation, m_rotationSpeed * Time.deltaTime);	
 	}
 
     public void BackToMainMenu()

@@ -745,6 +745,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60bb078c64b458044bc4e890750fea89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_playerMaterial: {fileID: 2100000, guid: 91349c8e2eae87243bec5368a657409e, type: 2}
+  m_playerColors:
+  - {r: 0.6793104, g: 0.6793104, b: 0.6793104, a: 1}
+  - {r: 0.22394946, g: 0.853, b: 0.07526472, a: 1}
+  - {r: 0.834, g: 0, b: 0.5519117, a: 1}
+  - {r: 0.6475481, g: 0.22833087, b: 0.941, a: 1}
+  - {r: 0.9068966, g: 0.06001522, b: 0.06001522, a: 1}
+  - {r: 0.975862, g: 0.38747466, b: 0, a: 1}
+  - {r: 0.01741888, g: 0.78965515, b: 0.6533782, a: 1}
+  - {r: 0.091, g: 0.441, b: 0.87241375, a: 1}
+  - {r: 0.92068964, g: 0.8609563, b: 0.10831642, a: 1}
+  - {r: 0.044827588, g: 0.024721095, b: 0.03447866, a: 1}
+  m_playerTrails:
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
+  - {fileID: 1872204802431906, guid: 5b12dece198c66e43810e9e8df1f7c3a, type: 2}
   m_currentLevel: 0
   m_menuFocus: 0
 --- !u!4 &1869914519
