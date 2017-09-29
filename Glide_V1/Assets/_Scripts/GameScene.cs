@@ -7,12 +7,12 @@ public class GameScene : MonoBehaviour {
 
     private CanvasGroup m_fadeGroup;
     private float m_fadeDuration = 2f;
-    private bool m_gameStarted;
+    private bool m_gameStarted = false;
 
     private void Start()
     {
+        SceneManager.LoadScene(Manager.Instance.m_currentLevel.ToString(), LoadSceneMode.Additive);
         m_fadeGroup = FindObjectOfType<CanvasGroup>();
-        m_gameStarted = false;
         m_fadeGroup.alpha = 1; 
 
     }

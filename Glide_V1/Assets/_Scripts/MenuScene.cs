@@ -19,6 +19,10 @@ public class MenuScene : MonoBehaviour
     public Text m_trailBuySetText;
     public Text m_goldText;
 
+    public Button m_tiltControlButton;
+    public Color m_tiltControlEnabled;
+    public Color m_tiltControlDisabled; 
+
     private int[] m_colorCost = new int[] { 0, 5, 5, 5, 10, 10, 10, 15, 15, 10 };
     private int[] m_trailCost = new int[] { 0, 20, 40, 40, 60, 60, 80, 80, 100, 100 };
     private int m_selectColorIndex;
@@ -46,6 +50,17 @@ public class MenuScene : MonoBehaviour
         // temp
         SaveManager.m_instance.m_state.m_gold = 999;
         UpdateGoldText();
+
+        // check for accelerometer
+        if(SystemInfo.supportsAccelerometer)
+        {
+            m_tiltControlButton.GetComponent<Image>().color = (SaveManager.m_instance.m_state.m_usingAccelerometor) ? m_tiltControlEnabled : m_tiltControlDisabled;
+        }
+        else
+        {
+            m_tiltControlButton.gameObject.SetActive(false);
+        }
+
 
         m_MenuCam = FindObjectOfType<MenuCamera>();
         //grab only canvas grp in scene
@@ -414,6 +429,11 @@ public class MenuScene : MonoBehaviour
         m_goldText.text = SaveManager.m_instance.m_state.m_gold.ToString();
     }
 
-
+    public void OnTiltControl()
+    {
+        SaveManager.m_instance.m_state.m_usingAccelerometor = !SaveManager.m_instance.m_state.m_usingAccelerometor;
+        SaveManager.m_instance.Save();
+        m_tiltControlButton.GetComponent<Image>().color = (SaveManager.m_instance.m_state.m_usingAccelerometor) ? m_tiltControlEnabled : m_tiltControlDisabled;
+    }
 
 }
