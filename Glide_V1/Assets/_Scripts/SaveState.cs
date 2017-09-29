@@ -8,4 +8,6 @@ public class SaveState {
     public int m_trailOwned = 0;
     public int m_activeColor = 0;
     public int m_activeTrail = 0;
+
+    public bool m_usingAccelerometor = true; 
 }

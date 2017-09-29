@@ -25,7 +25,13 @@ public class MenuScene : MonoBehaviour
     private int m_selectedTrailIndex;
     private int m_activeColorIndex;
     private int m_activeTrailIndex;
-    private MenuCamera m_MenuCam; 
+    private MenuCamera m_MenuCam;
+
+    private Texture m_previousTrail;
+    private GameObject m_lastPreviewObject;
+
+    public Transform m_trailPreviewObject;
+    public RenderTexture m_trailPreviewTexture;
 
     private Vector3 m_desiredMenuPosition;
     private GameObject m_currentTrail; 
@@ -59,6 +65,10 @@ public class MenuScene : MonoBehaviour
 
         m_colorPanel.GetChild(SaveManager.m_instance.m_state.m_activeColor).GetComponent<RectTransform>().localScale = Vector3.one * 1.125f;
         m_trailPanel.GetChild(SaveManager.m_instance.m_state.m_activeTrail).GetComponent<RectTransform>().localScale = Vector3.one * 1.125f;
+
+        m_lastPreviewObject = Instantiate(Manager.Instance.m_playerTrails[SaveManager.m_instance.m_state.m_activeTrail]) as GameObject;
+        m_lastPreviewObject.transform.SetParent(m_trailPreviewObject);
+        m_lastPreviewObject.transform.localPosition = Vector3.zero;
 
         SetCameraTo(Manager.Instance.m_menuFocus);
     }
@@ -119,11 +129,13 @@ public class MenuScene : MonoBehaviour
             b.onClick.AddListener(() => OnTrailSelect(currentIndex));
 
             //set trail of owned or not
-            Image img = t.GetComponent<Image>();
+            RawImage img = t.GetComponent<RawImage>();
             img.color = SaveManager.m_instance.IsTrailOwned(i) ? Manager.Instance.m_playerColors[currentIndex] : new Color(0.7f, 0.7f, 0.7f);
 
             i++;
         }
+
+        m_previousTrail = m_trailPanel.GetChild(SaveManager.m_instance.m_state.m_activeTrail).GetComponent<RawImage>().texture;
     }
 
     private void InitLevel()
@@ -221,6 +233,20 @@ public class MenuScene : MonoBehaviour
         {
             return;
         }
+
+        //preview trail
+        m_trailPanel.GetChild(m_selectedTrailIndex).GetComponent<RawImage>().texture = m_previousTrail;
+        m_previousTrail = m_trailPanel.GetChild(index).GetComponent<RawImage>().texture;
+        m_trailPanel.GetChild(index).GetComponent<RawImage>().texture = m_trailPreviewTexture;
+
+        if(m_lastPreviewObject != null)
+        {
+            Destroy(m_lastPreviewObject);
+        }
+
+        m_lastPreviewObject = Instantiate(Manager.Instance.m_playerTrails[index]) as GameObject;
+        m_lastPreviewObject.transform.SetParent(m_trailPreviewObject);
+        m_lastPreviewObject.transform.localPosition = Vector3.zero;
 
         // Make icon bigger
         m_trailPanel.GetChild(index).GetComponent<RectTransform>().localScale = Vector3.one * 1.125f;
@@ -333,7 +359,7 @@ public class MenuScene : MonoBehaviour
                 //success
                 SetTrail(m_selectedTrailIndex);
 
-                m_trailPanel.GetChild(m_selectedTrailIndex).GetComponent<Image>().color = Color.white;
+                m_trailPanel.GetChild(m_selectedTrailIndex).GetComponent<RawImage>().color = Color.white;
 
                 UpdateGoldText();
             }

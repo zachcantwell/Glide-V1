@@ -17,6 +17,13 @@ public class SaveManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         m_instance = this;
         Load();
+
+        // are we using the accelerometer?
+        if(m_state.m_usingAccelerometor && !SystemInfo.supportsAccelerometer)
+        {
+            m_state.m_usingAccelerometor = false;
+            Save();
+        }
     }
 
     // save this script

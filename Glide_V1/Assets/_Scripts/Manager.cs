@@ -17,10 +17,46 @@ public class Manager : MonoBehaviour {
     public int m_currentLevel = 0;
     public int m_menuFocus = 0;
 
+    private Dictionary<int, Vector2> m_activeTouches = new Dictionary<int, Vector2>();
+
 	void Start () {
         DontDestroyOnLoad(gameObject);
         Instance = this; 	
 	}
-	
+
+    public Vector3 GetPlayerInput()
+    {
+        if(SaveManager.m_instance.m_state.m_usingAccelerometor)
+        {
+            Vector3 a = Input.acceleration;
+            a.y = a.z;
+            return a; 
+        }
+
+        Vector3 r = Vector3.zero;
+        foreach(Touch touch in Input.touches)
+        {
+            if(touch.phase == TouchPhase.Began)
+            {
+                m_activeTouches.Add(touch.fingerId, touch.position);
+            }
+            else if(touch.phase == TouchPhase.Ended)
+            {
+                if(m_activeTouches.ContainsKey(touch.fingerId))
+                {
+                    m_activeTouches.Remove(touch.fingerId);
+                }
+            }
+            else
+            {
+                float mag = 0;
+                r = (touch.position - m_activeTouches[touch.fingerId]);
+                mag = r.magnitude / 300;
+                r = r.normalized * mag; 
+            }
+
+        }
+        return r;    
+    }
 
 }

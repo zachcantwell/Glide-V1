@@ -24,7 +24,10 @@ public class MenuCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.localPosition = Vector3.Lerp(transform.localPosition, m_desiredPosition, m_positionSpeed * Time.deltaTime);
+
+        float x = Manager.Instance.GetPlayerInput().x; 
+
+        transform.localPosition = Vector3.Lerp(transform.localPosition, m_desiredPosition + new Vector3(0, x, 0) * 0.01f, m_positionSpeed * Time.deltaTime);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, m_desiredRotation, m_rotationSpeed * Time.deltaTime);	
 	}
 
