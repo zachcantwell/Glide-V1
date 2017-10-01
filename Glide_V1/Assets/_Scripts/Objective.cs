@@ -14,6 +14,8 @@ public class Objective : MonoBehaviour {
 
     private void Start()
     {
+        FindObjectOfType<GameScene>().m_Objective = this; 
+
         foreach(Transform t in transform)
         {
             m_rings.Add(t);
@@ -57,5 +59,10 @@ public class Objective : MonoBehaviour {
     private void Victory()
     {
         FindObjectOfType<GameScene>().CompleteLevel();
+    }
+
+    public Transform GetCurrentRing()
+    {
+        return m_rings[m_ringPassed];
     }
 }

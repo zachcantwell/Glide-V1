@@ -48,7 +48,7 @@ public class MenuScene : MonoBehaviour
     void Start()
     {
         // temp
-        SaveManager.m_instance.m_state.m_gold = 999;
+       // SaveManager.m_instance.m_state.m_gold = 999;
         UpdateGoldText();
 
         // check for accelerometer
@@ -61,11 +61,10 @@ public class MenuScene : MonoBehaviour
             m_tiltControlButton.gameObject.SetActive(false);
         }
 
-
         m_MenuCam = FindObjectOfType<MenuCamera>();
+
         //grab only canvas grp in scene
         m_fadeGroup = FindObjectOfType<CanvasGroup>();
-
         m_fadeGroup.alpha = 1f;
 
         InitShop();
