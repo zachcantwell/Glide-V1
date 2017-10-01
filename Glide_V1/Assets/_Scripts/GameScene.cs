@@ -13,6 +13,7 @@ public class GameScene : MonoBehaviour {
     public Transform m_arrow;
     private Transform m_playerTransform;
     public Objective m_Objective;
+    private Vector3 m_ringPos;
 
     private void Start()
     {
@@ -27,10 +28,20 @@ public class GameScene : MonoBehaviour {
         if(m_Objective != null)
         {
             //rotate arrow
-            Vector3 dir = m_playerTransform.InverseTransformPoint(m_Objective.GetCurrentRing().position);
+            Debug.Log(m_Objective + " is set");
+
+            if(m_Objective.GetCurrentRing().position != null)
+            {
+                 m_ringPos = m_Objective.GetCurrentRing().position;
+            }
+            Vector3 dir = m_playerTransform.InverseTransformPoint(m_ringPos);
             float a = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-            a += 100;
-            m_arrow.transform.localEulerAngles = new Vector3(0, 180f, 0);
+            a += 180;
+            m_arrow.transform.localEulerAngles = new Vector3(0f, 180f, a);
+        }
+        else
+        {
+            Debug.Log("m_Objective = null");
         }
 
         if(Time.timeSinceLevelLoad <= m_fadeDuration)

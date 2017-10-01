@@ -20,6 +20,7 @@ public class Objective : MonoBehaviour {
         {
             m_rings.Add(t);
             t.GetComponent<MeshRenderer>().material = m_inactiveRing;
+            Debug.Log(m_rings.Count);
         }
 
         if(m_rings.Count == 0)
