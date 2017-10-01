@@ -33,6 +33,12 @@ public class Manager : MonoBehaviour {
             return a; 
         }
 
+        //if all released
+        if(Input.touches.Length == 0)
+        {
+            m_activeTouches.Clear();
+        }
+
         Vector3 r = Vector3.zero;
         foreach(Touch touch in Input.touches)
         {
@@ -52,7 +58,12 @@ public class Manager : MonoBehaviour {
                 float mag = 0;
                 r = (touch.position - m_activeTouches[touch.fingerId]);
                 mag = r.magnitude / 300;
-                r = r.normalized * mag; 
+                r = r.normalized * mag;
+
+                if(r.magnitude > 1)
+                {
+                    r.Normalize();
+                }
             }
 
         }

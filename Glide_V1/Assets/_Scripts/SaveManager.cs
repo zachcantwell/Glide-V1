@@ -13,7 +13,8 @@ public class SaveManager : MonoBehaviour {
 
     private void Awake()
     {
-        //ResetSave();
+       // ResetSave();
+
         DontDestroyOnLoad(gameObject);
         m_instance = this;
         Load();
@@ -29,7 +30,7 @@ public class SaveManager : MonoBehaviour {
     // save this script
     public void Save()
     {
-         PlayerPrefs.SetString("save", Helper.Serialize<SaveState>(m_state));
+         PlayerPrefs.SetString("save", Helper.Encrypt(Helper.Serialize<SaveState>(m_state)));
     }
 
     //Load previous save state
@@ -37,7 +38,7 @@ public class SaveManager : MonoBehaviour {
     {
         if(PlayerPrefs.HasKey("save"))
         {
-            m_state = Helper.Deserialize<SaveState>(PlayerPrefs.GetString("save"));
+            m_state = Helper.Deserialize<SaveState>(Helper.Decrypt(PlayerPrefs.GetString("save")));
         }
         else
         {

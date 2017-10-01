@@ -11,8 +11,8 @@ public class PlayerMotor : MonoBehaviour {
 
     private CharacterController m_controller;
     private float m_baseSpeed = 10f;
-    private float m_rotSpeedX = 3f;
-    private float m_rotSpeedY = 1.5f;
+    private float m_rotSpeedX = 9f;
+    private float m_rotSpeedY = 3f;
 
     private void Start()
     {
